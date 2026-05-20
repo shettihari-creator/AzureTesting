@@ -39,3 +39,22 @@ steps:
     ArtifactName: 'student-app-dist'
     publishLocation: 'Container'
   displayName: 'Publish build artifact'
+
+# Deploy to Azure Storage Static Website (optional)
+# Requires an Azure service connection and storage account name/resource group set as pipeline variables:
+# - AZURE_SERVICE_CONNECTION: name of the Azure service connection in Azure DevOps
+# - AZURE_RESOURCE_GROUP: resource group that contains the storage account
+# - AZURE_STORAGE_ACCOUNT: storage account name with static website enabled
+- task: AzureCLI@2
+  displayName: 'Deploy to Azure Storage Static Website'
+  inputs:
+    azureSubscription: '$(AZURE_SERVICE_CONNECTION)'
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      echo "Deploying student-app/dist to storage account $(AZURE_STORAGE_ACCOUNT) (resource group: $(AZURE_RESOURCE_GROUP))"
+      # enable static website (safe to run repeatedly)
+      az storage blob service-properties update --account-name $(AZURE_STORAGE_ACCOUNT) --static-website --index-document index.html --404-document index.html --auth-mode login
+      # upload files to the $web container
+      az storage blob upload-batch -s "$(Build.SourcesDirectory)/student-app/dist" -d '$web' --account-name $(AZURE_STORAGE_ACCOUNT) --auth-mode login
+  condition: and(succeeded(), ne(variables['AZURE_SERVICE_CONNECTION'], ''))
