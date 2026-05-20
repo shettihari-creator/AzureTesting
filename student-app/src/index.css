@@ -1,0 +1,33 @@
+:root{
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --accent: #2563eb;
+}
+*{box-sizing:border-box}
+body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:var(--bg); color:#0f172a}
+.app-container{max-width:900px;margin:32px auto;padding:16px}
+header h1{margin:0 0 16px 0;color:var(--accent)}
+.student-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.student-card{background:var(--card);padding:12px;border-radius:8px;box-shadow:0 1px 3px rgba(2,6,23,0.08);border:1px solid rgba(2,6,23,0.04)}
+.card-row{padding:6px 0;border-bottom:1px dashed rgba(2,6,23,0.04)}
+.card-row:last-child{border-bottom:0}
+
+.student-form{background:var(--card);padding:12px;border-radius:8px;border:1px solid rgba(2,6,23,0.04);margin-bottom:12px}
+.student-form label{display:block;margin-bottom:8px;font-size:14px}
+.student-form input{width:100%;padding:8px;margin-top:6px;border-radius:6px;border:1px solid #e6eef8;position:relative;z-index:2}
+.form-actions{display:flex;gap:8px;margin-top:8px}
+.student-form input:focus{outline:2px solid rgba(37,99,235,0.25);box-shadow:0 0 0 3px rgba(37,99,235,0.06)}
+
+.error{color:#b91c1c;background:#fff1f2;padding:6px;border-radius:6px;margin-top:8px;font-size:13px}
+button{background:var(--accent);color:white;border:0;padding:8px 12px;border-radius:6px;cursor:pointer}
+button.btn-ghost{background:transparent;color:var(--accent);border:1px solid rgba(37,99,235,0.12)}
+button.btn-danger{background:#ef4444}
+.card-actions{display:flex;gap:8px;margin-top:8px}
+
+.student-table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid rgba(2,6,23,0.04);border-radius:8px;overflow:hidden}
+.student-table thead{background:#f8fafc}
+.student-table th,.student-table td{padding:12px 14px;text-align:left;border-bottom:1px solid rgba(2,6,23,0.04)}
+.student-table tbody tr:hover{background:#fbfdff}
+.student-table .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace}
+.student-table button{margin-right:8px}
+
