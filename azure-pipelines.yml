@@ -1,0 +1,41 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  NODE_VERSION: '18'
+
+steps:
+- task: Cache@2
+  inputs:
+    key: "npm | package-lock.json"
+    restoreKeys: |
+      npm |
+    path: $(Pipeline.Workspace)/.npm
+  displayName: 'Cache npm'
+
+- task: NodeTool@0
+  inputs:
+    versionSpec: '$(NODE_VERSION)'
+  displayName: 'Use Node.js $(NODE_VERSION)'
+
+- script: |
+    cd student-app
+    npm ci
+  displayName: 'Install dependencies'
+
+- script: |
+    cd student-app
+    npm run build --if-present
+  displayName: 'Build (production)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'student-app/dist'
+    ArtifactName: 'student-app-dist'
+    publishLocation: 'Container'
+  displayName: 'Publish build artifact'
