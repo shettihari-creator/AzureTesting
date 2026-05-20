@@ -48,3 +48,29 @@ Notes
 - The pipeline deploy step is conditional and only runs if `AZURE_SERVICE_CONNECTION` is set.
 - If you prefer Azure Static Web Apps or App Service, tell me and I can switch the deployment step.
 
+Concrete example (your environment)
+
+- Subscription: "Azure subscription 1"
+- Resource group: `DefaultResourceGroup-CCAN`
+- Location: East US
+- Storage account name: `hareeshazuretesting`
+
+There is a helper script at `scripts/create-storage.sh` that will attempt to create the storage account (if it doesn't exist) and enable static website hosting using the values above. Usage:
+
+```bash
+# from repo root
+./scripts/create-storage.sh
+
+# then build and upload locally (optional test)
+cd student-app
+npm run build
+az storage blob upload-batch --account-name hareeshazuretesting --source dist --destination '$web'
+```
+
+After creating the storage account, add these pipeline variables in Azure DevOps:
+
+- `AZURE_SERVICE_CONNECTION` = name of your service connection (create in Project settings → Service connections)
+- `AZURE_RESOURCE_GROUP` = DefaultResourceGroup-CCAN
+- `AZURE_STORAGE_ACCOUNT` = hareeshazuretesting
+
+
