@@ -48,7 +48,7 @@ steps:
 - task: AzureCLI@2
   displayName: 'Deploy to Azure Storage Static Website'
   inputs:
-    azureSubscription: '$(AZURE_SERVICE_CONNECTION)'
+    azureSubscription: 'shettihari-creator.AzureTesting'
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
